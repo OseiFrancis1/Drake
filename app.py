@@ -1,37 +1,25 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
 
 # Title of the app
-st.title("Streamlit st.write() Demonstration")
+st.title("Population Health Metrics")
 
-# Writing text
-st.write("## This is a header")
-st.write("This is a simple text example using `st.write()`.")
+# Displaying population health metrics
+st.write("### Key Population Health Metrics")
 
-# Writing dataframes
-data = {
-    "Column 1": [1, 2, 3, 4],
-    "Column 2": [10, 20, 30, 40]
-}
-df = pd.DataFrame(data)
-st.write("### Here is a dataframe")
-st.write(df)
+# Metric 1: Average Heart Rate
+st.metric(label="Average Heart Rate", value="75 bpm", delta="-2 bpm")
 
-# Writing charts
-st.write("### Here is a chart")
-fig, ax = plt.subplots()
-ax.plot(df["Column 1"], df["Column 2"])
-st.write(fig)
+# Metric 2: Average Blood Pressure
+st.metric(label="Average Blood Pressure", value="125/85 mmHg", delta="+3/2 mmHg")
 
-# Writing markdown
-st.write("### This is markdown")
-st.write("""
-* Item 1
-* Item 2
-* Item 3
-""")
+# Metric 3: Average Blood Sugar Level
+st.metric(label="Average Blood Sugar Level", value="95 mg/dL", delta="+4 mg/dL")
 
-# Writing a dictionary
-st.write("### Here is a dictionary")
-st.write({"name": "Tommy", "age": 10})
+# Metric 4: Average Cholesterol Level
+st.metric(label="Average Cholesterol Level", value="200 mg/dL", delta="+5 mg/dL")
+
+# Metric 5: Obesity Rate
+st.metric(label="Obesity Rate", value="30%", delta="+1%")
+
+# Metric 6: Smoking Rate
+st.metric(label="Smoking Rate", value="20%", delta="-1%")
