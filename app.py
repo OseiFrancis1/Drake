@@ -13,3 +13,8 @@ if name:
   st.write(f"Hello, {name}! Welcome to the app.")
 
 
+# Writing dataframes
+data = {
+    "Column 1": [1, 2, 3, 4],
+    "Column 2": [10, 20, 30, 40]
+}
