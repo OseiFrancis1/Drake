@@ -1,5 +1,6 @@
 import streamlit as st
-
+import pandas as pd
+import matplotlib.pyplot as plt
 
 
 #set the title of the app
@@ -18,3 +19,4 @@ data = {
     "Column 1": [1, 2, 3, 4],
     "Column 2": [10, 20, 30, 40]
 }
+
