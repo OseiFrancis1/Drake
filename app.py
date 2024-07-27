@@ -1,37 +1,39 @@
+import utils
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
+from streaming import StreamHandler
 
-# Title of the app
-st.title("Streamlit st.write() Demonstration")
+from langchain.chains import ConversationChain
 
-# Writing text
-st.write("## This is a header")
-st.write("This is a simple text example using `st.write()`.")
+st.set_page_config(page_title="Chatbot", page_icon="💬")
+st.header('Basic Chatbot')
+st.write('Allows users to interact with the LLM')
+st.write('[![view source code ](https://img.shields.io/badge/view_source_code-gray?logo=github)](https://github.com/shashankdeshpande/langchain-chatbot/blob/master/pages/1_%F0%9F%92%AC_basic_chatbot.py)')
 
-# Writing dataframes
-data = {
-    "Column 1": [1, 2, 3, 4],
-    "Column 2": [10, 20, 30, 40]
-}
-df = pd.DataFrame(data)
-st.write("### Here is a dataframe")
-st.write(df)
+class BasicChatbot:
 
-# Writing charts
-st.write("### Here is a chart")
-fig, ax = plt.subplots()
-ax.plot(df["Column 1"], df["Column 2"])
-st.write(fig)
+    def __init__(self):
+        utils.sync_st_session()
+        self.llm = utils.configure_llm()
+    
+    def setup_chain(self):
+        chain = ConversationChain(llm=self.llm, verbose=True)
+        return chain
+    
+    @utils.enable_chat_history
+    def main(self):
+        chain = self.setup_chain()
+        user_query = st.chat_input(placeholder="Ask me anything!")
+        if user_query:
+            utils.display_msg(user_query, 'user')
+            with st.chat_message("assistant"):
+                st_cb = StreamHandler(st.empty())
+                result = chain.invoke(
+                    {"input":user_query},
+                    {"callbacks": [st_cb]}
+                )
+                response = result["response"]
+                st.session_state.messages.append({"role": "assistant", "content": response})
 
-# Writing markdown
-st.write("### This is markdown")
-st.write("""
-* Item 1
-* Item 2
-* Item 3
-""")
-
-# Writing a dictionary
-st.write("### Here is a dictionary")
-st.write({"name": "Tommy", "age": 10})
+if __name__ == "__main__":
+    obj = BasicChatbot()
+    obj.main()
